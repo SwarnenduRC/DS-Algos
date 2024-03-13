@@ -15,8 +15,8 @@ OBJS := $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SRCS))
 DBG_OBJS := $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%_d.o, $(SRCS))
 
 ##Binaries
-TARGET := $(BIN_DIR)/LeetCode
-DBG_TARGET := $(BIN_DIR)/LeetCodeD
+TARGET := $(BIN_DIR)/DS-Algos
+DBG_TARGET := $(BIN_DIR)/DS-AlgosD
 
 all : debug release
 
