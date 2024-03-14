@@ -10,7 +10,7 @@ CXX := clang++
 CXXFLAGS := -std=c++20 -g -Wall -Wextra -Werror -Wno-unused-function -I$(INC_DIR) $(addprefix -I, $(wildcard $(INC_DIR)/*))
 
 ##Files
-SRCS := $(wildcard $(SRC_DIR)/*.cpp)
+SRCS := $(wildcard *.cpp $(SRC_DIR)/*.cpp)
 OBJS := $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SRCS))
 DBG_OBJS := $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%_d.o, $(SRCS))
 
