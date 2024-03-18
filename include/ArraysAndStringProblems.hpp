@@ -11,6 +11,14 @@ class AlgoProblems : public ::testing::Test
          *        cannot use additional data structures? 
          */
         bool isUnique(std::string theString, const bool caseSensitive = false, const bool additionalDataStructuresAllowed = true);
+
+        /**
+         * @brief Check Permutation: Given two strings, write a method to decide if one is a permutation of the other.
+         */
+        bool checkPermutation(std::string stringOne, 
+                                    std::string stringTwo, 
+                                    const bool ignoreWhitespace = false, 
+                                    const bool ignoreCaseSensitivity = true);
 };
 
 #endif //_AARAYS_AND_STRING_PROBLEMS_H_

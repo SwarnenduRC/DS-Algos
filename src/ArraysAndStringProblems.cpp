@@ -1,5 +1,7 @@
 #include "ArraysAndStringProblems.hpp"
 
+#include <regex>
+#include <algorithm>
 
 bool AlgoProblems::isUnique(std::string theString, const bool caseSensitive, const bool additionalDataStructuresAllowed)
 {
@@ -64,4 +66,73 @@ bool AlgoProblems::isUnique(std::string theString, const bool caseSensitive, con
         }
         return true;
     }
+}
+
+bool AlgoProblems::checkPermutation(std::string stringOne, 
+                                    std::string stringTwo, 
+                                    const bool ignoreWhitespace, 
+                                    const bool ignoreCaseSensitivity)
+{
+    /**
+     * @brief First check, if they are not of same size then
+     * they can't be permutation of each other. Second check;
+     * if either of them empty then also return FALSE. Third
+     * P.S. It is assumed that the string contains only ASCII
+     * characters.
+     */
+    if (stringOne.empty() || stringTwo.empty())
+        return false;
+
+    // If the strings to be compared irrespective of their case sensitivity
+    // then convert both of them to either lowercase or uppercase
+    if (ignoreCaseSensitivity)
+    {
+        for (auto& charItm : stringOne)
+            charItm = std::tolower(charItm);
+
+        for (auto& charItm : stringTwo)
+            charItm = std::tolower(charItm);
+    }
+    // If whitespaces in the strings are to be ignored then remove the whitespaces from both the strings
+    if (ignoreWhitespace)
+    {
+        std::regex whiteSpace("\\s");
+        stringOne = std::regex_replace(stringOne, whiteSpace, "");
+        stringTwo = std::regex_replace(stringTwo, whiteSpace, "");
+    }
+    /**
+     * @brief First solution implies the logic that
+     * if the strings are permutation of each other
+     * then if we sort both of them and then compare
+     * the sorted strings then if they are not equal
+     * then they are not. Takes approx O(n log N) +
+     * O(n log N) + O(n) => O(3n + 2log N) => O(n log N)
+     */
+    auto solution = [](std::string stringOne, std::string stringTwo)
+    {
+        std::sort(stringOne.begin(), stringOne.end());
+        std::sort(stringTwo.begin(), stringTwo.end());
+        return stringOne == stringTwo;
+    };
+    /**
+     * @brief Second solution implies that the count of each
+     * characters in both the string should be same.
+     */
+    auto solutionOpt = [stringOne, stringTwo]()
+    {
+        std::array<int, 128> charCnts;
+        std::fill(charCnts.begin(), charCnts.end(), 0);
+
+        for (const auto& chaar : stringOne)
+            charCnts[chaar]++;
+
+        for (const auto& chaar : stringTwo)
+        {
+            charCnts[chaar]--;
+            if (charCnts[chaar] < 0)
+                return false;
+        }
+        return true;
+    };
+    return solution(stringOne, stringTwo) && solutionOpt();
 }
