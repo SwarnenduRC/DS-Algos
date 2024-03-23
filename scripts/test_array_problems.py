@@ -1,4 +1,5 @@
 from array_problems import ArrayAlgos as AA
+from itertools import permutations
 
 def test_isUnique():
     string = "abcd1234"
@@ -54,3 +55,18 @@ def test_isPermutation():
     secondString = " ab"
     assert classObj.isPermutation(firstString, secondString)
     assert classObj.isPermutation(firstString, secondString, False)
+    
+def test_palindromePermutation1():
+    dataset = [ "radar", "level", "deified", "madam", "racecar", "noon", "civic", "rotor", "refer", "redder" ]
+    classObj = AA()
+    for string in dataset:
+        permutation_list = [''.join(perm) for perm in permutations(string)]
+        for permString in permutation_list:
+            assert classObj.isPalindromePermutation(permString)
+            
+    dataset = [ "radara", "wlevel", "edeified", "nmadam", "aacecar", "pmnoon", "mcivic", "mrotor", "trefer" ]
+    for string in dataset:
+        permutation_list = [''.join(perm) for perm in permutations(string)]
+        for permString in permutation_list:
+            assert not classObj.isPalindromePermutation(permString)
+    

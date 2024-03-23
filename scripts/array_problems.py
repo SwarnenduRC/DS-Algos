@@ -1,4 +1,5 @@
 import array
+from itertools import permutations
 
 class ArrayAlgos:
     def __init__(self) -> None:
@@ -42,11 +43,6 @@ class ArrayAlgos:
         if ignoreWhiteSpace:
             stringOne = stringOne.replace(" ", "")
             stringTwo = stringTwo.replace(" ", "")
-            print(stringOne)
-            print(stringTwo)
-            
-        print(stringOne)
-        print(stringTwo)
         
         if not caseSensitive:
             stringOne = stringOne.upper()
@@ -60,6 +56,28 @@ class ArrayAlgos:
             charArr[ord(idx)] -= 1
             if charArr[ord(idx)] < 0:
                 return False
+        return True
+    
+    def isPalindromePermutation(self, string: str):
+        if not string:
+            return False
+        
+        string = string.replace(" ", "")
+        alphabets = dict()
+        
+        for char in string:
+            if char in alphabets:
+                alphabets[char] += 1
+            else:
+                alphabets[char] = 1
+                
+        oddCnt = 0
+        for char, value in alphabets.items():
+            if value % 2 > 0:
+                oddCnt += 1
+            
+        if oddCnt > 1:
+            return False
         return True
     
     
@@ -92,6 +110,12 @@ def main():
     for idx in stringTwo:
         charArr[ord(idx)] -= 1
     print(charArr)
+    
+    dataset = [ "radara", "wlevel", "edeified", "nmadam", "aacecar", "pmnoon", "mcivic", "mrotor", "trefer" ]
+    for string in dataset:
+        permutation_list = [''.join(perm) for perm in permutations(string)]
+        for permString in permutation_list:
+            assert not aa.isPalindromePermutation(permString)
     
 if __name__ == "__main__":
     main()
