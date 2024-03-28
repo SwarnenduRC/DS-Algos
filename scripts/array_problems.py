@@ -80,42 +80,63 @@ class ArrayAlgos:
             return False
         return True
     
+    def oneEditAway(self, firstString: str, secondString: str):
+        if len(firstString) == 0 or len(secondString) == 0:
+            return False
+        
+        if len(firstString) == len(secondString) + 1 or len(firstString) + 1 == len(secondString):
+            idxFirst = 0
+            idxSecond = 0
+            diffFound = False
+            while idxFirst < len(firstString) and idxSecond < len(secondString):
+                if firstString[idxFirst] != secondString[idxSecond]:
+                    if diffFound:
+                        return False
+                    diffFound = True
+                    if len(firstString) < len(secondString):
+                        idxSecond += 1
+                    elif len(firstString) > len(secondString):
+                        idxFirst += 1
+                    continue
+                                
+                idxFirst += 1
+                idxSecond += 1
+                
+            return True  ## Don't need to check the status of diffFound as the last character of one of the string is what extra if it reaches here
+        
+        if len(firstString) == len(secondString):
+            diffFound = False
+            idxFirst = 0
+            idxSecond = 0
+            while idxFirst < len(firstString) and idxSecond < len(secondString):
+                if firstString[idxFirst] != secondString[idxSecond]:
+                    if diffFound:
+                        return False
+                    diffFound = True
+                idxFirst += 1
+                idxSecond += 1
+            if diffFound:
+                return True
+            return False
     
     
-def main():
-    stringOne = "abc"
-    stringTwo = " b a c "
-    #print(stringOne)
-    #print(stringTwo)
     
+def main():    
     aa = ArrayAlgos()
-    if not aa.isPermutation(stringOne, stringTwo, False, True):
-        print("Something wrong")
-    else:
-        print("Working here")
+            
+    dataSetPositive = [("algorithm", "lgorithm"), 
+                       ("programming", "programing"),
+                       ("integration", "integratio"),
+                       ("examination", "exmination"),
+                       ("concentration", "concentrtion"),
+                       ("university", "universty"),
+                       ("extrapolation", "extrapolatin"),
+                       ("development", "developent"),
+                       ("acceleration", "aceleration"),
+                       ("difficulties", "dificulties")]
     
-    
-    stringOne = stringOne.replace(" ", "")
-    stringTwo = stringTwo.replace(" ", "")
-    print(stringOne)
-    print(stringTwo)
-    
-    charArr = [0] * 123
-    for idx in stringOne:
-        charArr[ord(idx)] += 1
-    print(charArr)
-    
-    print("")
-    
-    for idx in stringTwo:
-        charArr[ord(idx)] -= 1
-    print(charArr)
-    
-    dataset = [ "radara", "wlevel", "edeified", "nmadam", "aacecar", "pmnoon", "mcivic", "mrotor", "trefer" ]
-    for string in dataset:
-        permutation_list = [''.join(perm) for perm in permutations(string)]
-        for permString in permutation_list:
-            assert not aa.isPalindromePermutation(permString)
+    for firstString, secondString in dataSetPositive:
+        assert aa.oneEditAway(firstString, secondString)
     
 if __name__ == "__main__":
     main()

@@ -69,4 +69,54 @@ def test_palindromePermutation1():
         permutation_list = [''.join(perm) for perm in permutations(string)]
         for permString in permutation_list:
             assert not classObj.isPalindromePermutation(permString)
+            
+def test_oneEditAway():
+    classObj = AA()
+    dataSetPositive = [("algorithm", "lgorithm"), 
+                       ("programming", "programing"),
+                       ("integration", "integratio"),
+                       ("examination", "exmination"),
+                       ("concentration", "concentrtion"),
+                       ("university", "universty"),
+                       ("extrapolation", "extrapolatin"),
+                       ("development", "developent"),
+                       ("acceleration", "aceleration"),
+                       ("difficulties", "dificulties")]
+    
+    for firstString, secondString in dataSetPositive:
+        assert classObj.oneEditAway(firstString, secondString)
+        
+    for firstString, secondString in dataSetPositive:
+        assert classObj.oneEditAway(secondString, firstString)
+        
+    dataSetNegative = [("algorithm", "lgorishm"), 
+                       ("programming", "programimg"),
+                       ("integration", "integrateo"),
+                       ("examination", "exmimation"),
+                       ("concentration", "concentrsion"),
+                       ("university", "univercty"),
+                       ("extrapolation", "extrapolatim"),
+                       ("development", "developemt"),
+                       ("acceleration", "aseleration"),
+                       ("difficulties", "dipiculties")]
+    
+    for firstString, secondString in dataSetNegative:
+        assert not classObj.oneEditAway(firstString, secondString)
+        
+    for firstString, secondString in dataSetNegative:
+        assert not classObj.oneEditAway(secondString, firstString)
+        
+    dataSetPositive = [("algorithm", "algorishm"), 
+                       ("programming", "programmimg"),
+                       ("integration", "integratiom"),
+                       ("examination", "examimation"),
+                       ("concentration", "concentrasion"),
+                       ("university", "univercity"),
+                       ("extrapolation", "dxtrapolation"),
+                       ("development", "developmemt"),
+                       ("acceleration", "asceleration"),
+                       ("difficulties", "difficultigs")]
+    
+    for firstString, secondString in dataSetPositive:
+        assert classObj.oneEditAway(firstString, secondString)
     
