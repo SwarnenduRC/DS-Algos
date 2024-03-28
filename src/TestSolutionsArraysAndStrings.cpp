@@ -120,3 +120,64 @@ TEST_F(AlgoProblems, testPalindromePermutation)
     } */
 }
 
+TEST_F(AlgoProblems, testOneAway)
+{
+    {
+        std::vector<std::pair<std::string, std::string>> dataSet;        
+        // Examples of strings that are one insert away from each other to be equal
+        dataSet.push_back({"algorithm", "lgorithm"});                // Insert 'a' at the beginning of the second string
+        dataSet.push_back({"programming", "programing"});            // Insert 'm' in the middle of the second string
+        dataSet.push_back({"integration", "integratio"});            // Insert 'n' at the end of the second string
+        dataSet.push_back({"examination", "exmination"});            // Insert 'a' in the middle of the second string
+        dataSet.push_back({"concentration", "concentrtion"});        // Insert 'a' in the middle of the second string
+        dataSet.push_back({"university", "universty"});              // Insert 'i' in the middle of the second string
+        dataSet.push_back({"extrapolation", "extrapolatin"});        // Insert 'o' at the end of the second string
+        dataSet.push_back({"development", "developent"});            // Insert 'm' in the middle of the second string
+        dataSet.push_back({"acceleration", "aceleration"});          // Insert 'c' in the middle of the second string
+        dataSet.push_back({"difficulties", "dificulties"});          // Insert 'f' in the middle of the second string
+
+        for (const auto& data : dataSet)
+            EXPECT_TRUE(oneAway(data.first, data.second));
+
+        for (const auto& data : dataSet)
+            EXPECT_TRUE(oneAway(data.second, data.first));
+    }
+    {
+        std::vector<std::pair<std::string, std::string>> dataSet;        
+        // Examples of strings that are one insert away from each other to be equal but actually not
+        dataSet.push_back({"algorithm", "lgorishm"});
+        dataSet.push_back({"programming", "programimg"});
+        dataSet.push_back({"integration", "integrateo"});
+        dataSet.push_back({"examination", "exmimation"});
+        dataSet.push_back({"concentration", "concentrsion"});
+        dataSet.push_back({"university", "univercty"});
+        dataSet.push_back({"extrapolation", "extrapolatim"});
+        dataSet.push_back({"development", "developemt"});
+        dataSet.push_back({"acceleration", "aseleration"});
+        dataSet.push_back({"difficulties", "dipiculties"});
+
+        for (const auto& data : dataSet)
+            EXPECT_FALSE(oneAway(data.first, data.second));
+
+        for (const auto& data : dataSet)
+            EXPECT_FALSE(oneAway(data.second, data.first));
+    }
+    {
+        std::vector<std::pair<std::string, std::string>> dataSet;        
+        // Examples of strings that are one edit away from each other to be equal
+        dataSet.push_back({"algorithm", "algorishm"});
+        dataSet.push_back({"programming", "programmimg"});
+        dataSet.push_back({"integration", "integratiom"});
+        dataSet.push_back({"examination", "examimation"});
+        dataSet.push_back({"concentration", "concentrasion"});
+        dataSet.push_back({"university", "univercity"});
+        dataSet.push_back({"extrapolation", "dxtrapolation"});
+        dataSet.push_back({"development", "developmemt"});
+        dataSet.push_back({"acceleration", "asceleration"});
+        dataSet.push_back({"difficulties", "difficultigs"});
+
+        for (const auto& data : dataSet)
+            EXPECT_TRUE(oneAway(data.first, data.second));
+    }
+}
+

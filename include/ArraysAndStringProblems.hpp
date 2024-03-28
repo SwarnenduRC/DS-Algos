@@ -38,6 +38,17 @@ class AlgoProblems : public ::testing::Test
          * dictionary words. EXAMPLE Input: Tact Coa. Output: True (permutations: " tac o cat " " atc o cta" etc.)
          */
         static bool palindromePermutation(std::string theString);
+        /**
+         * @brief There are three types of edits that can be performed on strings: insert a character,
+         * remove a character, or replace a character. Given two strings, write a function to check if they are
+         * one edit (or zero edits) away.
+         * EXAMPLE
+         * pale, ple -> true
+         * pales, pale -> true
+         * pale, bale -> true
+         * pale, bae -> false
+         */
+        static bool oneAway(std::string firstString, std::string secondString);
 };
 
 #endif //_AARAYS_AND_STRING_PROBLEMS_H_

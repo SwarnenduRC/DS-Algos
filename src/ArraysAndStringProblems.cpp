@@ -225,7 +225,7 @@ bool AlgoProblems::palindromePermutation(std::string theString)
     /**
      * @brief If you think more deeply about this problem, you might notice that we don't actually need to know the
      * counts. We just need to know if the count is even or odd. Think about flipping a light on/off (that is initially
-     * off). If the light winds up in the o f f state, we don't know how many times we flipped it, but we do know it
+     * off). If the light winds up in the off state, we don't know how many times we flipped it, but we do know it
      * was an even count,
      * Given this, we can use a single integer (as a bit vector). When we see a letter, we map it to an integer
      * between 0 and 26 (assuming an English alphabet). Then we toggle the bit at that value. At the end of the
@@ -258,4 +258,78 @@ bool AlgoProblems::palindromePermutation(std::string theString)
     //return secondSolution();
     //return thirdSolution();
     return firstSolution() && secondSolution() && thirdSolution();
+}
+
+bool AlgoProblems::oneAway(std::string firstString, std::string secondString)
+{
+    if (firstString.empty() || secondString.empty())
+        return false;
+
+    /**
+     * @brief There is a "brute force" algorithm to do this. We could check all possible strings that are one edit away by
+     * testing the removal of each character (and comparing), testing the replacement of each character (and
+     * comparing), and then testing the insertion of each possible character (and comparing).
+     * 
+     * That would be too slow, so let's not bother with implementing it.
+     * 
+     * This is one of those problems where it's helpful to think about the "meaning" of each of these operations.
+     * What does it mean for two strings to be one insertion, replacement, or removal away from each other?
+     * 
+     * Replacement: Consider two strings, such as bale and pale, that are one replacement away. Yes, that
+     * does mean that you could replace a character in bale to make pale. But more precisely, it means that
+     * they are different only in one place.
+     * 
+     * Insertion: The strings apple and aple are one insertion away. This means that if you compared the
+     * strings, they would be identical-except for a shift at some point in the strings.
+     * 
+     * Removal: The strings apple and aple are also one removal away, since removal is just the inverse of
+     * insertion.
+     */
+
+    auto oneInsertOrDeleteAway = [firstString, secondString]()
+    {
+        auto& longString = (firstString.size() > secondString.size()) ? firstString : secondString;
+        auto& shortString = (firstString.size() < secondString.size()) ? firstString : secondString;
+        auto diffCnt = 0;
+        size_t idxSS = 0;
+        size_t idxLS = 0;
+
+        while (idxSS < shortString.size() && idxLS < longString.size())
+        {
+            if (shortString[idxSS] != longString[idxLS])
+            {
+                ++diffCnt;
+                if (diffCnt > 1)
+                    return false;
+
+                ++idxLS;
+                continue;
+            }
+            ++idxLS;
+            ++idxSS;
+        }
+        return true; // Don't need to check the status of diffFound as the last character of one of the string is what extra if it reaches here
+    };
+    auto oneEditAway = [firstString, secondString]()
+    {
+        auto foundDiff = false;
+        for (size_t idx = 0; idx < firstString.size(); ++idx)
+        {
+            if (firstString[idx] != secondString[idx])
+            {
+                if (foundDiff)
+                    return false;
+                foundDiff = true;
+            }
+        }
+        if (foundDiff)
+            return true;
+        return false;
+    };
+
+    if ((firstString.size() == secondString.size() - 1) || (firstString.size() - 1 == secondString.size()))
+        return oneInsertOrDeleteAway();
+    else if (firstString.size() == secondString.size())
+        return oneEditAway();
+    return false;
 }
