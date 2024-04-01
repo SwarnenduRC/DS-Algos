@@ -333,3 +333,42 @@ bool AlgoProblems::oneAway(std::string firstString, std::string secondString)
         return oneEditAway();
     return false;
 }
+
+std::string AlgoProblems::compressString(std::string theString)
+{
+    if (theString.empty())
+        return std::string{};
+
+    if (theString.size() < 2)
+        return theString;
+
+    /**
+     * @brief The logic is actually quite straigtforward. We iterate through the string
+     * and check if two consequtive characters are same or not. If they are same we increase
+     * the repeat count, otherwise we set it back to 1 for the next character. We also move
+     * the current matching character to the next one in anticipation to find a repeat for
+     * the next sequence. We start iterating from the 2nd character of the string as first is
+     * already been considered before the loop. Time complexity is O(N) approx by negelecting
+     * the inbuilt function's ones
+     */
+    size_t repCnt = 1;
+    std::string retVal;
+    char current = theString[0];
+    for (size_t idx = 1; idx < theString.size(); ++idx)
+    {
+        auto next = theString[idx];
+        if (current == next)
+        {
+            repCnt++;
+        }
+        else
+        {            
+            retVal.append(std::string(1, current).append(std::to_string(repCnt)));
+            repCnt = 1;
+        }
+        current = next;
+    }
+    auto builtString = std::string(1, current).append(std::to_string(repCnt));
+    retVal.append(builtString);
+    return retVal;
+}

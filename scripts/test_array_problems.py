@@ -119,4 +119,14 @@ def test_oneEditAway():
     
     for firstString, secondString in dataSetPositive:
         assert classObj.oneEditAway(firstString, secondString)
+        
+def test_stringCompress():
+    clsObj = AA()
+    dataset = [("aabcccccaaa", "a2b1c5a3"),
+               ("aabcccccaaad", "a2b1c5a3d1"),
+               ("zzzzzzzzzzz", "z11"),
+               ("yzzzzzzzzzzz", "y1z11")]
+    
+    for string, expString in dataset:
+        assert clsObj.compressString(string) == expString
     

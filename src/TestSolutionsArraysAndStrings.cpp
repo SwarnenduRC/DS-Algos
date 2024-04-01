@@ -181,3 +181,17 @@ TEST_F(AlgoProblems, testOneAway)
     }
 }
 
+TEST_F(AlgoProblems, testCompressString)
+{
+    std::vector<std::pair<std::string, std::string>> dataSet = { {"aabcccccaaa", "a2b1c5a3"}
+                                                                ,{"aabcccccaaad", "a2b1c5a3d1"}
+                                                                ,{"zzzzzzzzzzz", "z11"}
+                                                                ,{"yzzzzzzzzzzz", "y1z11"} };
+
+    for (const auto& item : dataSet)
+    {
+        auto retVal = compressString(item.first);
+        EXPECT_EQ(retVal, item.second) << item.first;
+    }
+}
+

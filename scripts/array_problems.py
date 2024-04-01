@@ -58,7 +58,7 @@ class ArrayAlgos:
                 return False
         return True
     
-    def isPalindromePermutation(self, string: str):
+    def isPalindromePermutation(self, string: str) -> bool:
         if not string:
             return False
         
@@ -80,7 +80,7 @@ class ArrayAlgos:
             return False
         return True
     
-    def oneEditAway(self, firstString: str, secondString: str):
+    def oneEditAway(self, firstString: str, secondString: str) -> bool:
         if len(firstString) == 0 or len(secondString) == 0:
             return False
         
@@ -118,7 +118,32 @@ class ArrayAlgos:
             if diffFound:
                 return True
             return False
-    
+        
+    def compressString(self, string: str) -> str:
+        if len(string) == 0:
+            return str()
+        
+        if len(string) < 2:
+            return string
+        
+        current = string[0]
+        startPos = 1
+        repCnt = 1
+        appendString = []
+        for idx in range(startPos, len(string)):
+            next = string[idx]
+            if current == next:
+                repCnt += 1
+            else:
+                appendString.append(current)
+                appendString.append(str(repCnt))
+                repCnt = 1
+                
+            current = next
+            
+        appendString.append(current)
+        appendString.append(str(repCnt))
+        return ''.join(appendString)
     
     
 def main():    
