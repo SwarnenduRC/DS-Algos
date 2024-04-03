@@ -372,3 +372,39 @@ std::string AlgoProblems::compressString(std::string theString)
     retVal.append(builtString);
     return retVal;
 }
+
+bool AlgoProblems::isRotation(std::string_view S1, std::string_view S2)
+{
+    /**
+     * If we imagine that S2 is a rotation of S1, then we can ask what the rotation point is. For example, if you
+     * rotate waterbottle after wat, you get erbottlewat. In a rotation, we cut S1 into two parts, x and y,
+     * and rearrange them to get S2.
+     * 
+     * S1 = xy = waterbottle
+     * x = wat
+     * y = erbottle
+     * S2 = yx = erbottlewat
+     * 
+     * So, we need to check if there's a way to split s1 into x and y such that xy = s1 and yx = s2. Regardless of
+     * where the division between x and y is, we can see that yx will always be a substring of xyxy.That is, s2 will
+     * always be a substring of s1s1.
+     * 
+     * And this is precisely how we solve the problem: simply do isSubstring(slsl, s2).
+     */
+    auto isSubString = [](std::string_view S1S1, std::string_view S2)
+    {
+        if (S1S1.empty())
+            return false;
+        else
+            return S1S1.find(S2) != std::string_view::npos;
+    };
+    if (S1.empty() || S2.empty())
+        return false;
+
+    if (S1.size() != S2.size())
+        return false;
+
+    std::string S1S1 = S1.data();
+    S1S1 += S1;
+    return isSubString(S1S1, S2);
+}

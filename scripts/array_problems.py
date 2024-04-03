@@ -145,6 +145,14 @@ class ArrayAlgos:
         appendString.append(str(repCnt))
         return ''.join(appendString)
     
+    def isRotation(self, S1: str, S2: str) -> bool:
+        if len(S1) == 0 or len(S2) == 0:
+            return False
+        if len(S1) != len(S2):
+            return False
+        
+        S1S1 = S1 + S1
+        return S1S1.find(S2) != -1
     
 def main():    
     aa = ArrayAlgos()

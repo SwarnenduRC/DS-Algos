@@ -129,4 +129,21 @@ def test_stringCompress():
     
     for string, expString in dataset:
         assert clsObj.compressString(string) == expString
+        
+def test_isRotation():
+    clsObj = AA()
+    dataset = [("waterbottle", "erbottlewat"),
+               ("programming", "grammingpro"),
+               ("openai", "aiopen"),
+               ("stackoverflow", "overflowstack")]
+    
+    for S1, S2 in dataset:
+        assert clsObj.isRotation(S1, S2)
+        
+    S1 = "waterbottle"
+    S2 = "ear"
+    assert not clsObj.isRotation(S1, S2)
+    
+    S2 = "er"
+    assert not clsObj.isRotation(S1, S2)
     

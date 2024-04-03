@@ -195,3 +195,21 @@ TEST_F(AlgoProblems, testCompressString)
     }
 }
 
+TEST_F(AlgoProblems, testIsRotation)
+{
+    std::vector<std::pair<std::string, std::string>> dataSet = { {"waterbottle", "erbottlewat"}
+                                                                ,{"programming", "grammingpro"}
+                                                                ,{"openai", "aiopen"}
+                                                                ,{"stackoverflow", "overflowstack"}};
+
+    for (const auto& item : dataSet)
+        EXPECT_TRUE(isRotation(item.first, item.second));
+
+    auto S1 = "waterbottle";
+    auto S2 = "ear";
+    EXPECT_FALSE(isRotation(S1, S2));
+
+    S2 = "er";
+    EXPECT_FALSE(isRotation(S1, S2));
+}
+
