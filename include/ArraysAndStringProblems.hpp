@@ -49,6 +49,13 @@ class AlgoProblems : public ::testing::Test
          * pale, bae -> false
          */
         static bool oneAway(std::string firstString, std::string secondString);
+        /**
+         * String Compression: Implement a method to perform basic string compression using the counts
+         * of repeated characters. For example, the string aabcccccaaa would become a2blc5a3. If the
+         * "compressed" string would not become smaller than the original string, your method should return
+         * the original string. You can assume the string has only uppercase and lowercase letters (a - z).
+        */
+        static std::string compressString(std::string theString);
 };
 
 #endif //_AARAYS_AND_STRING_PROBLEMS_H_
