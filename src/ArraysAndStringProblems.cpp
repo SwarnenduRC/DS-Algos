@@ -372,3 +372,100 @@ std::string AlgoProblems::compressString(std::string theString)
     retVal.append(builtString);
     return retVal;
 }
+
+bool AlgoProblems::isRotation(std::string_view S1, std::string_view S2)
+{
+    /**
+     * If we imagine that S2 is a rotation of S1, then we can ask what the rotation point is. For example, if you
+     * rotate waterbottle after wat, you get erbottlewat. In a rotation, we cut S1 into two parts, x and y,
+     * and rearrange them to get S2.
+     * 
+     * S1 = xy = waterbottle
+     * x = wat
+     * y = erbottle
+     * S2 = yx = erbottlewat
+     * 
+     * So, we need to check if there's a way to split s1 into x and y such that xy = s1 and yx = s2. Regardless of
+     * where the division between x and y is, we can see that yx will always be a substring of xyxy.That is, s2 will
+     * always be a substring of s1s1.
+     * 
+     * And this is precisely how we solve the problem: simply do isSubstring(slsl, s2).
+     */
+    auto isSubString = [](std::string_view S1S1, std::string_view S2)
+    {
+        if (S1S1.empty())
+            return false;
+        else
+            return S1S1.find(S2) != std::string_view::npos;
+    };
+    if (S1.empty() || S2.empty())
+        return false;
+
+    if (S1.size() != S2.size())
+        return false;
+
+    std::string S1S1 = S1.data();
+    S1S1 += S1;
+    return isSubString(S1S1, S2);
+}
+
+void AlgoProblems::setZeros(std::vector<std::vector<int>>& matrix)
+{
+    if (matrix.empty())
+        return;
+
+    using Matrix = std::vector<std::vector<int>>;
+
+    auto nullifyRow = [](Matrix& matrix, size_t row)
+    {
+        for (size_t col = 0; col < matrix[row].size(); ++col)
+            matrix[row][col] = 0;
+    };
+    auto nullifyColumn = [](Matrix& matrix, size_t col)
+    {
+        for (size_t row = 0; row < matrix.size(); ++row)
+            matrix[row][col] = 0;
+    };
+    /**
+     * @brief It takes O(MxN) time as each of the elements
+     * in the matrix needs to be checked at least once.
+     * But it also takes O(M+N) space as we are keeping
+     * tow arrays for rows and columns.
+     */
+    auto solution = [&nullifyRow, &nullifyColumn](Matrix& matrix)
+    {
+        // Take two arrays which will hold the rwo and column
+        // indexes respectively which has a value zero
+        std::vector<bool> rowsWithZero(matrix.size(), false);
+        std::vector<bool> columnsWithZero(matrix[0].size(), false);
+        // Iterate through the matrix and identify the row and col
+        // indexes with zeros
+        for (size_t row = 0; row < matrix.size(); ++row)
+        {
+            for (size_t col = 0; col < matrix[row].size(); ++col)
+            {
+                if (matrix[row][col] == 0)
+                {
+                    rowsWithZero[row] = true;
+                    columnsWithZero[col] = true;
+                }
+            }
+        }
+        // Now check which rows have zeros in the row array and make
+        // the columns for that row to zero
+        for (size_t row = 0; row < rowsWithZero.size(); ++row)
+        {
+            if (rowsWithZero[row])
+                nullifyRow(matrix, row);
+        }
+        // Now check which columns have zeros in the row array and make
+        // the rows for that column to zero
+        for (size_t col = 0; col < columnsWithZero.size(); ++col)
+        {
+            if (columnsWithZero[col])
+                nullifyColumn(matrix, col);
+        }
+        return matrix;
+    };
+    solution(matrix);
+}

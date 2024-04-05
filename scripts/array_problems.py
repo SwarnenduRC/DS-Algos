@@ -145,7 +145,38 @@ class ArrayAlgos:
         appendString.append(str(repCnt))
         return ''.join(appendString)
     
+    def isRotation(self, S1: str, S2: str) -> bool:
+        if len(S1) == 0 or len(S2) == 0:
+            return False
+        if len(S1) != len(S2):
+            return False
+        
+        S1S1 = S1 + S1
+        return S1S1.find(S2) != -1
     
+    def setZero(self, matrix):
+        if len(matrix) == 0:
+            return
+
+        rowWithZeros = [False] * len(matrix)
+        colWithZeros = [False] * len(matrix[0])
+
+        for row in range(len(matrix)):
+            for col in range(len(matrix[row])):
+                if matrix[row][col] == 0:
+                    rowWithZeros[row] = True
+                    colWithZeros[col] = True
+
+        for row in range(len(rowWithZeros)):
+            if rowWithZeros[row]:
+                for col in range(len(matrix[0])):
+                    matrix[row][col] = 0
+
+        for col in range(len(colWithZeros)):
+            if colWithZeros[col]:
+                for row in range(len(matrix)):
+                    matrix[row][col] = 0
+
 def main():    
     aa = ArrayAlgos()
             

@@ -56,6 +56,19 @@ class AlgoProblems : public ::testing::Test
          * the original string. You can assume the string has only uppercase and lowercase letters (a - z).
         */
         static std::string compressString(std::string theString);
+        /**
+         * @brief String Rotation
+         * Assume you have a method isSubString which checks if one word is a substring
+         * of another. Given two strings, S1 and S2, write code to check if S2 is a rotation
+         * of S1 using only one call to isSubString (e.g., "waterbottle" is a rotation of" erbottlewat").
+         */
+        static bool isRotation(std::string_view S1, std::string_view S2);
+        /**
+         * @brief Zero Matrix
+         * Write an algorithm such that if an element in an MxN matrix is 0, its entire row and
+         * column are set to 0.
+         */
+        static void setZeros(std::vector<std::vector<int>>& matrix);
 };
 
 #endif //_AARAYS_AND_STRING_PROBLEMS_H_
