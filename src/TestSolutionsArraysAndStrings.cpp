@@ -213,3 +213,25 @@ TEST_F(AlgoProblems, testIsRotation)
     EXPECT_FALSE(isRotation(S1, S2));
 }
 
+TEST_F(AlgoProblems, testSetZero)
+{
+    using Matrix = std::vector<std::vector<int>>;
+
+    Matrix orgMatrix = { { 52, 83, 14, 0 }
+                        ,{ 18, 29, 10, 23 }
+                        ,{ 0, 56, 34, 67 }
+                        ,{ 76, 89, 22, 33 } };
+
+    Matrix expMatrix = { { 0, 0, 0, 0 }
+                        ,{ 0, 29, 10, 0 }
+                        ,{ 0, 0, 0, 0 }
+                        ,{ 0, 89, 22, 0 } };
+
+    setZeros(orgMatrix);
+    for (size_t row = 0; row < expMatrix.size(); ++row)
+    {
+        for (size_t col = 0; col < expMatrix[row]. size(); ++col)
+            EXPECT_EQ(expMatrix[row][col], orgMatrix[row][col]) << "matrix[" << row << "][" << col << "]" << std::endl;
+    }
+}
+

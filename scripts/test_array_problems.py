@@ -146,4 +146,22 @@ def test_isRotation():
     
     S2 = "er"
     assert not clsObj.isRotation(S1, S2)
+
+def test_setZero():
+    matrix = [ [ 52, 83, 14, 0 ]
+              ,[ 18, 29, 10, 23 ]
+              ,[ 0, 56, 34, 67 ]
+              ,[ 76, 89, 22, 33 ] ]
+
+    expMatrix = [ [ 0, 0, 0, 0 ]
+              ,[ 0, 29, 10, 0 ]
+              ,[ 0, 0, 0, 0 ]
+              ,[ 0, 89, 22, 0 ] ]
+
+    clsObj = AA()
+    clsObj.setZero(matrix)
+    for row in range(len(matrix)):
+        for col in range(len(matrix[row])):
+            assert matrix[row][col] == expMatrix[row][col]
+
     

@@ -63,6 +63,12 @@ class AlgoProblems : public ::testing::Test
          * of S1 using only one call to isSubString (e.g., "waterbottle" is a rotation of" erbottlewat").
          */
         static bool isRotation(std::string_view S1, std::string_view S2);
+        /**
+         * @brief Zero Matrix
+         * Write an algorithm such that if an element in an MxN matrix is 0, its entire row and
+         * column are set to 0.
+         */
+        static void setZeros(std::vector<std::vector<int>>& matrix);
 };
 
 #endif //_AARAYS_AND_STRING_PROBLEMS_H_

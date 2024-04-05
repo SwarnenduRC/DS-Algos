@@ -408,3 +408,64 @@ bool AlgoProblems::isRotation(std::string_view S1, std::string_view S2)
     S1S1 += S1;
     return isSubString(S1S1, S2);
 }
+
+void AlgoProblems::setZeros(std::vector<std::vector<int>>& matrix)
+{
+    if (matrix.empty())
+        return;
+
+    using Matrix = std::vector<std::vector<int>>;
+
+    auto nullifyRow = [](Matrix& matrix, size_t row)
+    {
+        for (size_t col = 0; col < matrix[row].size(); ++col)
+            matrix[row][col] = 0;
+    };
+    auto nullifyColumn = [](Matrix& matrix, size_t col)
+    {
+        for (size_t row = 0; row < matrix.size(); ++row)
+            matrix[row][col] = 0;
+    };
+    /**
+     * @brief It takes O(MxN) time as each of the elements
+     * in the matrix needs to be checked at least once.
+     * But it also takes O(M+N) space as we are keeping
+     * tow arrays for rows and columns.
+     */
+    auto solution = [&nullifyRow, &nullifyColumn](Matrix& matrix)
+    {
+        // Take two arrays which will hold the rwo and column
+        // indexes respectively which has a value zero
+        std::vector<bool> rowsWithZero(matrix.size(), false);
+        std::vector<bool> columnsWithZero(matrix[0].size(), false);
+        // Iterate through the matrix and identify the row and col
+        // indexes with zeros
+        for (size_t row = 0; row < matrix.size(); ++row)
+        {
+            for (size_t col = 0; col < matrix[row].size(); ++col)
+            {
+                if (matrix[row][col] == 0)
+                {
+                    rowsWithZero[row] = true;
+                    columnsWithZero[col] = true;
+                }
+            }
+        }
+        // Now check which rows have zeros in the row array and make
+        // the columns for that row to zero
+        for (size_t row = 0; row < rowsWithZero.size(); ++row)
+        {
+            if (rowsWithZero[row])
+                nullifyRow(matrix, row);
+        }
+        // Now check which columns have zeros in the row array and make
+        // the rows for that column to zero
+        for (size_t col = 0; col < columnsWithZero.size(); ++col)
+        {
+            if (columnsWithZero[col])
+                nullifyColumn(matrix, col);
+        }
+        return matrix;
+    };
+    solution(matrix);
+}
