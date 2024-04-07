@@ -26,5 +26,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: GtestCases
+    - name: GtestCases-Debug
     - run: ./bin/DS-AlgosD --gtest_shuffle --gtest_repeat=3
+    - name: GtestCases-Release
+    - run: ./bin/DS-Algos --gtest_shuffle --gtest_repeat=3
