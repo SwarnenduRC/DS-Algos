@@ -121,6 +121,8 @@ namespace linked_list
             inline size_t size() const noexcept { return m_size; }
             inline SinglyNode* getHead() const noexcept { return m_pHead; }
             inline SinglyNode* getTail() const noexcept { return m_pTail; }
+            inline void incrementSize() noexcept { ++m_size; }
+            inline void decrementSize() noexcept { --m_size; }
 
             /**
              * @brief Detects whether the given linked list is cyclic in nature or not
