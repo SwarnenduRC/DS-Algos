@@ -27,6 +27,13 @@ class LinkListAlgos : public ::testing::Test
          * How would you solve this problem if a temporary buffer is not allowed?
          */
         static SinglyLinkedList removeDuplicate(const SinglyLinkedList& list);
+        /**
+         * @brief Return Kth to Last
+         * Implement an algorithm to find the kth to last element of a singly linked list.
+         * Assume that you don't know the size of the list
+         */
+        static void* returnKthToLast(const SinglyLinkedList& list, const size_t k);
 };
 
 #endif  //_LINK_LIST_PROBLEMS_H_
+

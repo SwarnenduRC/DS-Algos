@@ -80,3 +80,35 @@ SinglyLinkedList LinkListAlgos::removeDuplicate(const SinglyLinkedList& list)
     return firstSolution(list);
     //return secondSolution(list);
 }
+
+void* LinkListAlgos::returnKthToLast(const SinglyLinkedList& list, const size_t k)
+{
+    if (list.empty())
+        return nullptr;
+
+    auto pHead = list.getHead();
+    auto pRunner = list.getHead();
+
+    /**
+     * The logic is quite simple. We take two pointers.
+     * Initially both are pointing to the head of the list.
+     * Then at first step we move the second/runner pointer
+     * by the count of K. On second step, we move both the
+     * pointers at same space till the runner hits the last
+     * node. For example, if k=5 i.e.; we need to return the
+     * 5th last node (k=0 returns the last node), we move the
+     * runner 5th position in advance before we start moving
+     * both the pointer at same space. Time complexity is O(N)
+     * and space complexity is O(1)
+     */
+    for (size_t cnt = 0; cnt < k; ++cnt)
+        pRunner = pRunner->m_pNext;
+
+    while (pRunner->m_pNext)
+    {
+        pHead = pHead->m_pNext;
+        pRunner = pRunner->m_pNext;
+    }
+    return static_cast<void*>(pHead);
+}
+
