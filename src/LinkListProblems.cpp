@@ -80,3 +80,67 @@ SinglyLinkedList LinkListAlgos::removeDuplicate(const SinglyLinkedList& list)
     return firstSolution(list);
     //return secondSolution(list);
 }
+
+void* LinkListAlgos::returnKthToLast(const SinglyLinkedList& list, const size_t k)
+{
+    if (list.empty())
+        return nullptr;
+
+    auto pHead = list.getHead();
+    auto pRunner = list.getHead();
+
+    /**
+     * The logic is quite simple. We take two pointers.
+     * Initially both are pointing to the head of the list.
+     * Then at first step we move the second/runner pointer
+     * by the count of K. On second step, we move both the
+     * pointers at same space till the runner hits the last
+     * node. For example, if k=5 i.e.; we need to return the
+     * 5th last node (k=0 returns the last node), we move the
+     * runner 5th position in advance before we start moving
+     * both the pointer at same space. Time complexity is O(N)
+     * and space complexity is O(1)
+     */
+    for (size_t cnt = 0; cnt < k; ++cnt)
+        pRunner = pRunner->m_pNext;
+
+    while (pRunner->m_pNext)
+    {
+        pHead = pHead->m_pNext;
+        pRunner = pRunner->m_pNext;
+    }
+    return static_cast<void*>(pHead);
+}
+
+bool LinkListAlgos::deleteMiddle(SinglyNode* pNode)
+{
+    if (pNode == nullptr)
+        return false;
+
+    if (pNode->m_pNext == nullptr)  //Last node so can't be deleted
+        return false;
+
+    /**
+     * @brief The logic is quite simple. As we don't know the size of
+     * the node, neither we know the head so we loop through the list
+     * from the given node till the last node. And while looping, we
+     * assign the next node's value to it's previous node till we reach
+     * the last node. Once we reach the last node we se the second last
+     * node's next pointer to NULL and delete the lst node.
+     */
+    while (pNode->m_pNext)  // Loop throgh the nodes and assign the next node's value to prev node
+    {
+        pNode->m_element = pNode->m_pNext->m_element;
+        if (pNode->m_pNext->m_pNext == nullptr) //Last node found so delete it.
+        {
+            auto pLastNode = pNode->m_pNext;
+            pNode->m_pNext = nullptr;
+            delete pLastNode;
+            pLastNode = nullptr;
+            break;
+        }
+        pNode = pNode->m_pNext;
+    }
+    return true;
+}
+
