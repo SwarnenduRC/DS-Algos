@@ -112,3 +112,35 @@ void* LinkListAlgos::returnKthToLast(const SinglyLinkedList& list, const size_t 
     return static_cast<void*>(pHead);
 }
 
+bool LinkListAlgos::deleteMiddle(SinglyNode* pNode)
+{
+    if (pNode == nullptr)
+        return false;
+
+    if (pNode->m_pNext == nullptr)  //Last node so can't be deleted
+        return false;
+
+    /**
+     * @brief The logic is quite simple. As we don't know the size of
+     * the node, neither we know the head so we loop through the list
+     * from the given node till the last node. And while looping, we
+     * assign the next node's value to it's previous node till we reach
+     * the last node. Once we reach the last node we se the second last
+     * node's next pointer to NULL and delete the lst node.
+     */
+    while (pNode->m_pNext)  // Loop throgh the nodes and assign the next node's value to prev node
+    {
+        pNode->m_element = pNode->m_pNext->m_element;
+        if (pNode->m_pNext->m_pNext == nullptr) //Last node found so delete it.
+        {
+            auto pLastNode = pNode->m_pNext;
+            pNode->m_pNext = nullptr;
+            delete pLastNode;
+            pLastNode = nullptr;
+            break;
+        }
+        pNode = pNode->m_pNext;
+    }
+    return true;
+}
+
