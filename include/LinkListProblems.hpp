@@ -65,6 +65,17 @@ class LinkListAlgos : public ::testing::Test
          * Output: 9 -> 1 -> 2. That is, 912.
          */
         static SinglyLinkedList getSum(const SinglyLinkedList& list1, const SinglyLinkedList& list2, const bool msbFirst = false);
+        /**
+         * @brief Palindrome
+         * Implement a function to check if a linked list is a palindrome.
+         *
+         * To approach this problem, we can picture a palindrome like
+         * 0 - > 1 - > 2 - > 1 - > 0. We know that, since it's a palindrome
+         * the list must be the same backwards and forwards.
+         *
+         * We don't know the size of the list
+         */
+        static bool isPalindrome(const SinglyLinkedList& list);
 };
 
 #endif  //_LINK_LIST_PROBLEMS_H_

@@ -331,3 +331,19 @@ TEST_F(LinkListAlgos, testGetSum)
         ASSERT_TRUE(getSum(list1, list2, true).empty());
     }
 }
+
+TEST_F(LinkListAlgos, testIsPalindrome)
+{
+    {
+        SinglyLinkedList list = { 1, 2, 3, 4, 3, 2, 1 };
+        EXPECT_TRUE(isPalindrome(list));
+    }
+    {
+        SinglyLinkedList list = { 1, 2, 3, 4, 4, 3, 2, 1 };
+        EXPECT_TRUE(isPalindrome(list));
+    }
+    {
+        SinglyLinkedList list = { 1, 2, 3, 4, 3, 5, 1 };
+        EXPECT_FALSE(isPalindrome(list));
+    }
+}
