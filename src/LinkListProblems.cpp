@@ -11,6 +11,8 @@
 #include "LinkListProblems.hpp"
 
 #include <unordered_set>
+#include <stack>
+#include <queue>
 
 SinglyLinkedList LinkListAlgos::removeDuplicate(const SinglyLinkedList& list)
 {
@@ -126,7 +128,7 @@ bool LinkListAlgos::deleteMiddle(SinglyNode* pNode)
      * from the given node till the last node. And while looping, we
      * assign the next node's value to it's previous node till we reach
      * the last node. Once we reach the last node we se the second last
-     * node's next pointer to NULL and delete the lst node.
+     * node's next pointer to NULL and delete the lst node. 
      */
     while (pNode->m_pNext)  // Loop throgh the nodes and assign the next node's value to prev node
     {
@@ -142,5 +144,153 @@ bool LinkListAlgos::deleteMiddle(SinglyNode* pNode)
         pNode = pNode->m_pNext;
     }
     return true;
+}
+
+SinglyLinkedList LinkListAlgos::getSum(const SinglyLinkedList& list1, const SinglyLinkedList& list2, const bool msbFirst)
+{
+    if (list1.empty() && list2.empty())
+        return SinglyLinkedList{};
+
+    else if (list1.empty())
+        return list2;
+
+    else if (list2.empty())
+        return list1;
+
+    else
+    {
+        if (msbFirst)
+        {
+            auto fillStack = [](SinglyNode* pHead, std::stack<int>& theStack)
+            {
+                while (pHead)
+                {
+                    theStack.push(pHead->m_element);
+                    pHead = pHead->m_pNext;
+                }
+            };
+            /**
+             * @brief This lambda calculates the summation of the nodes.
+             * This lambda calculates the summation of the nodes, takes
+             * into account the carry for the next nodes summation from
+             * the previous nodes addition, inserts the resultant nodes
+             * into the result list.
+             * 
+             * This lambda can be used for both the cases where either
+             * both the lists are equal in size or one of the list is
+             * bigger than the other. The trick is to pass the
+             * pointer of the shorter list as pStack1 as the loop within
+             * the lambda while making calculation solely depends on the
+             * variable pStack1. If both the lists are equal in size then pass
+             * any stack pointer to any.  
+             */
+            auto calculateSum = [](int carry, SinglyLinkedList& sum, std::stack<int>* pStack1, std::stack<int>* pStack2)
+            {
+                while (!pStack1->empty())
+                {
+                    auto summation = carry + pStack1->top() + (pStack2 ? pStack2->top() : 0);
+                    carry = summation / 10;
+                    auto reminder = summation % 10;
+                    sum.push_front(reminder);
+                    pStack1->pop();
+                    if (pStack2)
+                        pStack2->pop();
+                }
+                return carry;
+            };
+            
+            std::stack<int> stack1;
+            std::stack<int> stack2;
+            auto pH1 = list1.getHead();
+            auto pH2 = list2.getHead();
+
+            fillStack(pH1, stack1);
+            fillStack(pH2, stack2);
+
+            SinglyLinkedList sum;
+            auto carry = 0;
+            if (stack1.size() == stack2.size())
+            {
+                carry = calculateSum(carry, sum, &stack1, &stack2);
+                if (carry > 0)
+                    sum.push_front(carry);
+            }
+            else if (stack1.size() < stack2.size())
+            {
+                carry = calculateSum(carry, sum, &stack1, &stack2); //First calculate the sum for the common length nodes
+                carry = calculateSum(carry, sum, &stack2, nullptr); //Now calculate the sum for the remaining nodes of the bigger list
+                if (carry > 0)
+                    sum.push_front(carry);
+            }
+            else
+            {
+                carry = calculateSum(carry, sum, &stack2, &stack1); //First calculate the sum for the common length nodes
+                carry = calculateSum(carry, sum, &stack1, nullptr); //Now calculate the sum for the remaining nodes of the bigger list
+                if (carry > 0)
+                    sum.push_front(carry);
+            }
+            return sum;
+        }
+        else    //LSB is at the head node
+        {
+            /**
+             * @brief This lambda calculates the summation of the nodes.
+             * This lambda calculates the summation of the nodes, takes
+             * into account the carry for the next nodes summation from
+             * the previous nodes addition, inserts the resultant nodes
+             * into the result list.
+             * 
+             * This lambda can be used for both the cases where either
+             * both the lists are equal in size or one of the list is
+             * bigger than the other. The trick is to pass the head
+             * pointer of the shorter list as pH1 as the loop within
+             * the lambda while making calculation solely depends on the
+             * variable pH1. If both the lists are equal in size then pass
+             * any head pointer to any.  
+             */
+            auto claculateSum = [](int carry, SinglyNode** pH1, SinglyNode** pH2, SinglyLinkedList& sum)
+            {
+                while (*pH1)
+                {
+                    auto summation = (*pH1)->m_element + (pH2 ? (*pH2)->m_element : 0) + carry;
+                    auto reminder = summation % 10;
+                    carry = summation / 10;
+                    sum.push_back(reminder);
+                    *pH1 = (*pH1)->m_pNext;
+                    if (pH2)
+                        *pH2 = (*pH2)->m_pNext;
+                }
+                return carry;
+            };
+
+            SinglyLinkedList sum;
+            auto pHead1 = list1.getHead();
+            auto pHead2 = list2.getHead();
+            if (list1.size() == list2.size())
+            {
+                auto carry = 0;
+                carry = claculateSum(carry, &pHead1, &pHead2, sum);
+                if (carry > 0)
+                    sum.push_back(carry);
+            }
+            else if (list1.size() < list2.size())
+            {
+                auto carry = 0;
+                carry = claculateSum(carry, &pHead1, &pHead2, sum);     //First calculate the sum for the common length nodes
+                carry = claculateSum(carry, &pHead2, nullptr, sum);     //Now calculate the sum for the remaining nodes of the bigger list
+                if (carry > 0)  //Takes into account the final carry
+                    sum.push_back(carry);
+            }
+            else if (list2.size() < list1.size())
+            {
+                auto carry = 0;
+                carry = claculateSum(carry, &pHead2, &pHead1, sum);     //First calculate the sum for the common length nodes
+                carry = claculateSum(carry, &pHead1, nullptr, sum);     //Now calculate the sum for the remaining nodes of the bigger list
+                if (carry > 0)      //Takes into account the final carry
+                    sum.push_back(carry);
+            }
+            return sum;
+        }
+    }
 }
 

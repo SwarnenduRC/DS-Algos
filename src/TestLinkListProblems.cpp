@@ -139,3 +139,195 @@ TEST_F(LinkListAlgos, testDeleteMiddle)
         EXPECT_FALSE(deleteMiddle(pNode));
     }
 }
+
+TEST_F(LinkListAlgos, testGetSum)
+{
+    {
+        SinglyLinkedList list1 = { 1, 2, 3, 4, 5, 6 };  //654321 (LSB first at head)
+        SinglyLinkedList list2 = { 1, 2, 3, 4, 3, 2 };  //234321 (LSB first at head)
+        SinglyLinkedList expList = { 2, 4, 6, 8, 8, 8 }; // 888642 = 654321 + 234321 (LSB first at head)
+
+        auto resultList = getSum(list1, list2);
+        ASSERT_EQ(expList.size(), resultList.size());
+
+        auto pResultHead = resultList.getHead();
+        auto pExpHead = expList.getHead();
+        while (pExpHead)
+        {
+            EXPECT_EQ(pResultHead->m_element, pExpHead->m_element);
+            pResultHead = pResultHead->m_pNext;
+            pExpHead = pExpHead->m_pNext;
+        }
+        ASSERT_EQ(nullptr, pResultHead);
+    }
+    {
+        SinglyLinkedList list1 = { 1, 2, 3, 9, 9, 6 };  //699321 (LSB first at head)
+        SinglyLinkedList list2 = { 9, 7, 8 };  //879 (LSB first at head)
+        SinglyLinkedList expList = { 0, 0, 2, 0, 0, 7 }; // 700200 = 654321 + 234321 (LSB first at head)
+
+        auto resultList = getSum(list1, list2);
+        ASSERT_EQ(expList.size(), resultList.size());
+
+        auto pResultHead = resultList.getHead();
+        auto pExpHead = expList.getHead();
+        while (pExpHead)
+        {
+            EXPECT_EQ(pResultHead->m_element, pExpHead->m_element);
+            pResultHead = pResultHead->m_pNext;
+            pExpHead = pExpHead->m_pNext;
+        }
+        ASSERT_EQ(nullptr, pResultHead);
+    }
+    {
+        SinglyLinkedList list2 = { 1, 2, 3, 9, 9, 6 };  //699321 (LSB first at head)
+        SinglyLinkedList list1 = { 9, 7, 8 };  //879 (LSB first at head)
+        SinglyLinkedList expList = { 0, 0, 2, 0, 0, 7 }; // 700200 = 654321 + 234321 (LSB first at head)
+
+        auto resultList = getSum(list1, list2);
+        ASSERT_EQ(expList.size(), resultList.size());
+
+        auto pResultHead = resultList.getHead();
+        auto pExpHead = expList.getHead();
+        while (pExpHead)
+        {
+            EXPECT_EQ(pResultHead->m_element, pExpHead->m_element);
+            pResultHead = pResultHead->m_pNext;
+            pExpHead = pExpHead->m_pNext;
+        }
+        ASSERT_EQ(nullptr, pResultHead);
+    }
+    {
+        SinglyLinkedList list1 = { 1, 2, 3, 9, 9, 6 };  //699321 (LSB first at head)
+        SinglyLinkedList list2 = {};
+
+        auto resultList = getSum(list1, list2);
+        ASSERT_EQ(list1.size(), resultList.size());
+
+        auto pResultHead = resultList.getHead();
+        auto pExpHead = list1.getHead();
+        while (pExpHead)
+        {
+            EXPECT_EQ(pResultHead->m_element, pExpHead->m_element);
+            pResultHead = pResultHead->m_pNext;
+            pExpHead = pExpHead->m_pNext;
+        }
+        ASSERT_EQ(nullptr, pResultHead);
+    }
+    {
+        SinglyLinkedList list2 = { 1, 2, 3, 9, 9, 6 };  //699321 (LSB first at head)
+        SinglyLinkedList list1 = {};
+
+        auto resultList = getSum(list1, list2);
+        ASSERT_EQ(list2.size(), resultList.size());
+
+        auto pResultHead = resultList.getHead();
+        auto pExpHead = list2.getHead();
+        while (pExpHead)
+        {
+            EXPECT_EQ(pResultHead->m_element, pExpHead->m_element);
+            pResultHead = pResultHead->m_pNext;
+            pExpHead = pExpHead->m_pNext;
+        }
+        ASSERT_EQ(nullptr, pResultHead);
+    }
+    {
+        SinglyLinkedList list1;
+        SinglyLinkedList list2;
+        ASSERT_TRUE(getSum(list1, list2).empty());
+    }
+    
+    
+    {
+        SinglyLinkedList list1 = { 6, 5, 4, 3, 2, 1 };  //654321 (MSB first at head)
+        SinglyLinkedList list2 = { 2, 3, 4, 3, 2, 1 };  //234321 (MSB first at head)
+        SinglyLinkedList expList = { 8, 8, 8, 6, 4, 2 }; // 888642 = 654321 + 234321 (MSB first at head)
+
+        auto resultList = getSum(list1, list2, true);
+        ASSERT_EQ(expList.size(), resultList.size());
+
+        auto pResultHead = resultList.getHead();
+        auto pExpHead = expList.getHead();
+        while (pExpHead)
+        {
+            EXPECT_EQ(pResultHead->m_element, pExpHead->m_element);
+            pResultHead = pResultHead->m_pNext;
+            pExpHead = pExpHead->m_pNext;
+        }
+        ASSERT_EQ(nullptr, pResultHead);
+    }
+    {
+        SinglyLinkedList list1 = { 6, 9, 9, 3, 2, 1 };  //699321 (MSB first at head)
+        SinglyLinkedList list2 = { 8, 7, 9 };  //879 (MSB first at head)
+        SinglyLinkedList expList = { 7, 0, 0, 2, 0, 0 }; // 700200 = 699321 + 879 (MSB first at head)
+
+        auto resultList = getSum(list1, list2, true);
+        ASSERT_EQ(expList.size(), resultList.size());
+
+        auto pResultHead = resultList.getHead();
+        auto pExpHead = expList.getHead();
+        while (pExpHead)
+        {
+            EXPECT_EQ(pResultHead->m_element, pExpHead->m_element);
+            pResultHead = pResultHead->m_pNext;
+            pExpHead = pExpHead->m_pNext;
+        }
+        ASSERT_EQ(nullptr, pResultHead);
+    }
+    {
+        SinglyLinkedList list2 = { 6, 9, 9, 3, 2, 1 };  //699321 (MSB first at head)
+        SinglyLinkedList list1 = { 8, 7, 9 };  //879 (MSB first at head)
+        SinglyLinkedList expList = { 7, 0, 0, 2, 0, 0 }; // 700200 = 654321 + 234321 (MSB first at head)
+
+        auto resultList = getSum(list1, list2, true);
+        ASSERT_EQ(expList.size(), resultList.size());
+
+        auto pResultHead = resultList.getHead();
+        auto pExpHead = expList.getHead();
+        while (pExpHead)
+        {
+            EXPECT_EQ(pResultHead->m_element, pExpHead->m_element);
+            pResultHead = pResultHead->m_pNext;
+            pExpHead = pExpHead->m_pNext;
+        }
+        ASSERT_EQ(nullptr, pResultHead);
+    }
+    {
+        SinglyLinkedList list1 = { 6, 9, 9, 3, 2, 1 };  //699321 (MSB first at head)
+        SinglyLinkedList list2 = {};
+
+        auto resultList = getSum(list1, list2, true);
+        ASSERT_EQ(list1.size(), resultList.size());
+
+        auto pResultHead = resultList.getHead();
+        auto pExpHead = list1.getHead();
+        while (pExpHead)
+        {
+            EXPECT_EQ(pResultHead->m_element, pExpHead->m_element);
+            pResultHead = pResultHead->m_pNext;
+            pExpHead = pExpHead->m_pNext;
+        }
+        ASSERT_EQ(nullptr, pResultHead);
+    }
+    {
+        SinglyLinkedList list2 = { 6, 9, 9, 3, 2, 1 };  //699321 (MSB first at head)
+        SinglyLinkedList list1 = {};
+
+        auto resultList = getSum(list1, list2, true);
+        ASSERT_EQ(list2.size(), resultList.size());
+
+        auto pResultHead = resultList.getHead();
+        auto pExpHead = list2.getHead();
+        while (pExpHead)
+        {
+            EXPECT_EQ(pResultHead->m_element, pExpHead->m_element);
+            pResultHead = pResultHead->m_pNext;
+            pExpHead = pExpHead->m_pNext;
+        }
+        ASSERT_EQ(nullptr, pResultHead);
+    }
+    {
+        SinglyLinkedList list1;
+        SinglyLinkedList list2;
+        ASSERT_TRUE(getSum(list1, list2, true).empty());
+    }
+}
