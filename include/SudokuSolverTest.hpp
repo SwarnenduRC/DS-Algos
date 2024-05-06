@@ -4,5 +4,6 @@
 
 class SudokuSolverTest : public ::testing::Test
 {
-    
+    protected:
+        SudokuSolver m_SudokuBoard;
 };
