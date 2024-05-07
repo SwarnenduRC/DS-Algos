@@ -1,7 +1,6 @@
 #include "ArraysAndStringProblems.hpp"
 #include "LinkedListTest.hpp"
 #include "LinkListProblems.hpp"
-#include "SudokuSolverTest.hpp"
 
 int main(int argc, char** argv)
 {
