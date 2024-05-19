@@ -1,6 +1,7 @@
 #include "ArraysAndStringProblems.hpp"
 #include "LinkedListTest.hpp"
 #include "LinkListProblems.hpp"
+#include "StackProblemsTest.hpp"
 
 int main(int argc, char** argv)
 {
