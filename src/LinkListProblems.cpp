@@ -294,3 +294,59 @@ SinglyLinkedList LinkListAlgos::getSum(const SinglyLinkedList& list1, const Sing
     }
 }
 
+bool LinkListAlgos::isPalindrome(const SinglyLinkedList& list)
+{
+    if (list.empty())   //If the list is empty then return TRUE
+        return true;
+
+    auto pHead = list.getHead();
+    if (pHead->m_pNext == nullptr)  //If the list has only one element then also it is a palindrome
+        return true;
+
+    /**
+     * @brief As we don't know the size of the list thus
+     * we take two pointers approach, one a runner and
+     * the other one is a normal/slow.
+     */
+    auto pFast = list.getHead();
+    std::stack<int> stack;
+
+    /**
+     * @brief Push elements from first half of linked list onto stack. When fast runner
+     * (which is moving at 2x speed) reaches the end of the linked list, then we know we're at the middle
+     */
+    while (pFast && pFast->m_pNext)
+    {
+        stack.push(pHead->m_element);
+        pHead = pHead->m_pNext;
+        pFast = pFast->m_pNext->m_pNext;
+    }
+    /**
+     * @brief The list has odd no. of elements so advance the normal
+     * one step to skip the middle element.
+     *
+     * For example, suppose the list is like below
+     * 1-->2-->0-->2-->1. So after the first iteration we have our
+     * fast pointer pointing at 0 while the slow one at 2. We iterate
+     * the next time. Now the fast is at 1 and the slow one is at 0 which
+     * is middle element of the list. So we move forward the slow pointer
+     * one step ahead to reach the first element of the rest of the list.
+     *
+     * If the list would have even number of elements like below
+     * 1-->2-->2-->1, then the fast pointer would have reached to a NULL
+     * after the second iteration.
+     */
+    if (pFast)
+        pHead = pHead->m_pNext;
+
+    while (pHead)
+    {
+        if (pHead->m_element != stack.top())
+            return false;
+
+        pHead = pHead->m_pNext;
+        stack.pop();
+    }
+    return true;
+}
+
