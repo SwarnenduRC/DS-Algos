@@ -124,13 +124,13 @@ bool LinkListAlgos::deleteMiddle(SinglyNode* pNode)
 
     /**
      * @brief The logic is quite simple. As we don't know the size of
-     * the node, neither we know the head so we loop through the list
+     * the node, neither we know the head, so we loop through the list,
      * from the given node till the last node. And while looping, we
      * assign the next node's value to it's previous node till we reach
-     * the last node. Once we reach the last node we se the second last
-     * node's next pointer to NULL and delete the lst node. 
+     * the last node. Once we reach the last node we set the second last
+     * node's next pointer to NULL and delete the last node. 
      */
-    while (pNode->m_pNext)  // Loop throgh the nodes and assign the next node's value to prev node
+    while (pNode->m_pNext)  // Loop throgh the nodes and assign the next node's value to previous node
     {
         pNode->m_element = pNode->m_pNext->m_element;
         if (pNode->m_pNext->m_pNext == nullptr) //Last node found so delete it.
@@ -170,7 +170,7 @@ SinglyLinkedList LinkListAlgos::getSum(const SinglyLinkedList& list1, const Sing
                 }
             };
             /**
-             * @brief This lambda calculates the summation of the nodes.
+             * @brief Calculates the summation of the nodes.
              * This lambda calculates the summation of the nodes, takes
              * into account the carry for the next nodes summation from
              * the previous nodes addition, inserts the resultant nodes
@@ -179,7 +179,7 @@ SinglyLinkedList LinkListAlgos::getSum(const SinglyLinkedList& list1, const Sing
              * This lambda can be used for both the cases where either
              * both the lists are equal in size or one of the list is
              * bigger than the other. The trick is to pass the
-             * pointer of the shorter list as pStack1 as the loop within
+             * pointer of the shorter list as pStack1, as the loop within
              * the lambda while making calculation solely depends on the
              * variable pStack1. If both the lists are equal in size then pass
              * any stack pointer to any.  
@@ -312,7 +312,7 @@ bool LinkListAlgos::isPalindrome(const SinglyLinkedList& list)
     std::stack<int> stack;
 
     /**
-     * @brief Push elements from first half of linked list onto stack. When fast runner
+     * @brief Push elements from first half of linked list onto stack. When fast pointer or the runner
      * (which is moving at 2x speed) reaches the end of the linked list, then we know we're at the middle
      */
     while (pFast && pFast->m_pNext)
@@ -323,7 +323,7 @@ bool LinkListAlgos::isPalindrome(const SinglyLinkedList& list)
     }
     /**
      * @brief The list has odd no. of elements so advance the normal
-     * one step to skip the middle element.
+     * pointer one step to skip the middle element.
      *
      * For example, suppose the list is like below
      * 1-->2-->0-->2-->1. So after the first iteration we have our
