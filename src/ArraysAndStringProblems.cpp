@@ -22,7 +22,7 @@ bool AlgoProblems::isUnique(std::string theString, const bool caseSensitive, con
      * unicode then either UTF-8 or UTF-16 or UTF-32.
      */
 
-    // Return FALSE straingt away if the string size is more than 128  or empty
+    // Return FALSE straingt away if the string size is more than 128 or empty
     if (theString.size() > 128 || theString.empty())
         return false;
 
@@ -35,18 +35,16 @@ bool AlgoProblems::isUnique(std::string theString, const bool caseSensitive, con
             std::vector<bool> charTracker;
             charTracker.resize(128);
             std::fill(charTracker.begin(), charTracker.end(), false);
-            int ASCII_val = INT_MIN;
             auto stringCopy = string;
             for (auto& strChar : stringCopy)
             {
                 if (caseSensitive)
                     strChar = static_cast<char>(std::toupper(strChar));
 
-                ASCII_val = strChar;                
-                if (charTracker[ASCII_val])
+                if (charTracker[strChar])
                     return false;
 
-                charTracker[ASCII_val] = true;
+                charTracker[strChar] = true;
             }
             return true;
         };
@@ -86,7 +84,7 @@ bool AlgoProblems::checkPermutation(std::string stringOne,
     /**
      * @brief First check, if they are not of same size then
      * they can't be permutation of each other. Second check;
-     * if either of them empty then also return FALSE. Third
+     * if either of them empty then also return FALSE.
      * P.S. It is assumed that the string contains only ASCII
      * characters.
      */
@@ -114,7 +112,7 @@ bool AlgoProblems::checkPermutation(std::string stringOne,
      * @brief First solution implies the logic that
      * if the strings are permutation of each other
      * then if we sort both of them and then compare
-     * the sorted strings then if they are not equal
+     * the sorted strings, then, if they are not equal,
      * then they are not. Takes approx O(n log N) +
      * O(n log N) + O(n) => O(3n + 2log N) => O(n log N)
      */
@@ -157,7 +155,7 @@ bool AlgoProblems::palindromePermutation(std::string theString)
      * have an even number of almost all characters, so that half can be on one side and half can be on the other
      * side. At most one character (the middle character) can have an odd count.
      * 
-     * To be more precise, strings with even length (after removing ail non-letter characters) must have
+     * To be more precise, strings with even length (after removing all non-letter characters) must have
      * all even counts of characters. Strings of an odd length must have exactly one character with
      * an odd count. Of course, an "even" string can't have an odd number of exactly one character,
      * otherwise it wouldn't be an even-length string (an odd number + many even numbers = an odd
