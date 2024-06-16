@@ -22,7 +22,7 @@ class LinkListAlgos : public ::testing::Test
 {
     public:
         /**
-         * @brief Remove Dups
+         * @brief Remove Duplicates
          * Write code to remove duplicates from an unsorted linked list.
          * FOLLOW UP
          * How would you solve this problem if a temporary buffer is not allowed?
@@ -41,8 +41,8 @@ class LinkListAlgos : public ::testing::Test
          * of a singly linked list, given only access to that node
          * 
          * EXAMPLE
-         * lnput:the node c from the linked list a->b->c->d->e->f
-         * Result: nothing is returned, but the new linked list looks like a ->b->d- >e- >f
+         * Input: The node c from the linked list a->b->c->d->e->f
+         * Result: Nothing is returned, but the new linked list looks like a->b->d->e->f
          */
         static bool deleteMiddle(SinglyNode* pNode);
         /**
