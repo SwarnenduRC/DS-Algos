@@ -3,6 +3,8 @@
 #include "LinkListProblems.hpp"
 #include "StackProblemsTest.hpp"
 #include "QueueProblemsTest.hpp"
+#include "TreeNodeTest.hpp"
+#include "BSTTest.hpp"
 
 int main(int argc, char** argv)
 {
