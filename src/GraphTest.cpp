@@ -1,5 +1,13 @@
 #include "GraphTest.h"
 
+/**
+ * @brief The first element of the vector depicts a pair of total no of
+ * nodes and the edges present in the graph, e.g; the graph represented
+ * by this data object having total 10 nodes and 5 edges (a connection)
+ * between each two nodes is called an edge. In all Leetcode/Hackerrank
+ * problems a graph is described in this way only. The subsequent elements
+ * of the vector depicts each edge or the connections between various nodes.
+ */
 static std::vector<std::pair<int, int>> data = { 
                                                 std::make_pair(10, 5),
                                                 std::make_pair(1, 3),
@@ -10,7 +18,16 @@ static std::vector<std::pair<int, int>> data = {
                                             };
 
 static size_t expMtxSizeData = 11;
-
+/**
+ * @brief The first element of the vector depicts a pair of total no of
+ * nodes and the edges present in the graph, e.g; the graph represented
+ * by this data object having total 10 nodes and 5 edges (a connection)
+ * between each two nodes is called an edge. In all Leetcode/Hackerrank
+ * problems a graph is described in this way only. The subsequent elements
+ * of the vector depicts each edge or the connections between various nodes.
+ * A zero based graph means that the node 0 should not be counted for the
+ * purposes of indexing
+ */
 static std::vector<std::pair<int, int>> zeroBasedData = { 
                                                             std::make_pair(10, 5),
                                                             std::make_pair(1, 3),

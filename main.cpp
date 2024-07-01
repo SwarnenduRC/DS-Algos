@@ -5,6 +5,7 @@
 #include "QueueProblemsTest.hpp"
 #include "TreeNodeTest.hpp"
 #include "BSTTest.hpp"
+#include "GraphProblemsTest.hpp"
 
 int main(int argc, char** argv)
 {

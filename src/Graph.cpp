@@ -49,17 +49,19 @@ void Graph::fill(const std::vector<StdPair>& data, const bool zeroBased)
     size_t idx = 1;
     if (m_bZeroBased)
     {
-        m_adjacencyMatrix.resize(m_nodeCnt);
+        m_adjacencyMatrix.resize(m_nodeCnt);    //Setting the matrix size equals to total nodes available.
     }
     else
     {
-        m_adjacencyMatrix.resize(m_nodeCnt + 1);
-        m_adjacencyMatrix[0].resize(0);
+        m_adjacencyMatrix.resize(m_nodeCnt + 1);    //If it is a non zero based array then total indexes should be total node cnt + 1
+        m_adjacencyMatrix[0].resize(0); //No neighbours for the node 0 for non zero based matrix
     }
     while (idx < data.size())
     {
-        m_adjacencyMatrix[data[idx].first].emplace_back(data[idx].second);
-        m_adjacencyMatrix[data[idx].second].emplace_back(data[idx].first);
+        auto node = data[idx].first;
+        auto neighbour = data[idx].second;
+        m_adjacencyMatrix[node].emplace_back(neighbour);
+        m_adjacencyMatrix[neighbour].emplace_back(node);
         ++idx;
     }
 }
@@ -84,8 +86,10 @@ void Graph::addEdge(const StdPair& data) noexcept
         if (std::find(m_adjacencyMatrix[data.first].cbegin(), m_adjacencyMatrix[data.first].cend(), data.second) 
             == m_adjacencyMatrix[data.first].cend())
         {
-            m_adjacencyMatrix[data.first].emplace_back(data.second);
-            m_adjacencyMatrix[data.second].emplace_back(data.first);
+            auto node = data.first;
+            auto neighbour = data.second;
+            m_adjacencyMatrix[node].emplace_back(neighbour);
+            m_adjacencyMatrix[neighbour].emplace_back(node);
             ++m_edgeCnt;
         }
     }

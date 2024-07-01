@@ -5,11 +5,10 @@
 
 namespace swarnendu
 {
+    using StdPair = std::pair<int, int>;
+    using Matrix = std::vector<std::vector<int>>;
     class Graph
     {
-        using StdPair = std::pair<int, int>;
-        using Matrix = std::vector<std::vector<int>>;
-        
         public:
             Graph() = default;
             ~Graph() = default;
