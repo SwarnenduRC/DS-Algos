@@ -92,6 +92,35 @@ IntVector BSTTest::getElementsPostOrder(const BSTree& tree) noexcept
     return retVec;
 }
 
+// Level order traversal
+IntMatrix BSTTest::getElementsLevelOrder(const BSTree& tree) noexcept
+{
+    if (!tree.getRoot())
+        return IntMatrix{};
+
+    IntMatrix retVal = {};
+    std::vector<TreeNode*> levelVec = {tree.getRoot()}; //Get the root node of the tree first
+    //During each iteration check whether the list is having some data or not
+    while (!levelVec.empty())
+    {
+        retVal.emplace_back(levelVec);
+        //Convert the current level as prior level before we move to the next level
+        auto parents = levelVec;
+        //Reset it for the next level/iteration
+        levelVec.clear();
+        //Check for children of the current level nodes
+        for (const auto& pParentNode : parents)
+        {
+            if (pParentNode->m_pLeft)
+                levelVec.emplace_back(pParentNode->m_pLeft.get());
+
+            if (pParentNode->m_pRight)
+                levelVec.emplace_back(pParentNode->m_pRight.get());
+        }
+    }
+    return retVal;
+}
+
 void BSTTest::testTree(const BSTree& tree) noexcept
 {
     constexpr size_t expectedHeight = 4;
@@ -125,6 +154,65 @@ void BSTTest::testTree(const BSTree& tree) noexcept
     auto inOrderList = getElementsInOrder(tree);
     for (size_t idx = 0; idx < treeItemsInOrder.size(); ++idx)
         EXPECT_EQ(treeItemsInOrder[idx], inOrderList[idx]);
+
+    /**
+     * @brief This level order validation totally depends on the above two
+     * possible tree structures (for testing the logic whereas the logic itself
+     * stands valid for any BS tree with any level).
+     *
+     * A level order traversal of the above tree (which might have two alternate
+     * set of elements at each level) would give us the following
+     *
+     * Level-0: 5
+     * Level-1: Either { 3, 7 } or { 2, 7 }
+     * Level-2: Either { 2, 4, 6, 8 } or { 1, 3, 6, 8 }
+     * Level-3: Either { 1, 9 } or { 4, 9 }
+     */
+    auto levelOrder = getElementsLevelOrder(tree);
+    ASSERT_EQ(4, static_cast<int>(levelOrder.size()));
+
+    EXPECT_EQ(static_cast<int>(levelOrder[0].size()), 1);
+    EXPECT_EQ(static_cast<int>(levelOrder[1].size()), 2);
+    EXPECT_EQ(static_cast<int>(levelOrder[2].size()), 4);
+    EXPECT_EQ(static_cast<int>(levelOrder[3].size()), 2);
+
+    EXPECT_EQ(levelOrder[0][0]->getData(), 5);
+    {
+        auto secondLevelElements = levelOrder[1];
+        std::vector<int> firstProbability = { 3, 7 };
+        std::vector<int> secondProbability = { 2, 7 };
+        for (size_t idx = 0; idx < firstProbability.size(); idx++)
+        {
+            if (0 == idx)
+                EXPECT_TRUE((firstProbability[idx] == secondLevelElements[idx]->getData()) || (secondProbability[idx] == secondLevelElements[idx]->getData()));
+            else
+                EXPECT_EQ(firstProbability[idx], secondLevelElements[idx]->getData());
+        }
+    }
+    {
+        auto thirdLevelElements = levelOrder[2];
+        std::vector<int> firstProbability = { 2, 4, 6, 8 };
+        std::vector<int> secondProbability = { 1, 3, 6, 8 };
+        for (size_t idx = 0; idx < firstProbability.size(); idx++)
+        {
+            if (0 == idx || 1 == idx)
+                EXPECT_TRUE((firstProbability[idx] == thirdLevelElements[idx]->getData()) || (secondProbability[idx] == thirdLevelElements[idx]->getData()));
+            else
+                EXPECT_EQ(firstProbability[idx], thirdLevelElements[idx]->getData());
+        }
+    }
+    {
+        auto fourthLevelElements = levelOrder[3];
+        std::vector<int> firstProbability = { 4, 9 };
+        std::vector<int> secondProbability = { 1, 9 };
+        for (size_t idx = 0; idx < firstProbability.size(); idx++)
+        {
+            if (0 == idx)
+                EXPECT_TRUE((firstProbability[idx] == fourthLevelElements[idx]->getData()) || (secondProbability[idx] == fourthLevelElements[idx]->getData()));
+            else
+                EXPECT_EQ(firstProbability[idx], fourthLevelElements[idx]->getData());
+        }
+    }
 }
 
 TEST_F(BSTTest, testDefaultConstructor)

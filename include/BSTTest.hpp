@@ -14,6 +14,7 @@
 #include <gtest/gtest.h>
 
 using IntVector = std::vector<int>;
+using IntMatrix = std::vector<std::vector<TreeNode*>>;
 
 class BSTTest : public ::testing::Test
 {
@@ -21,6 +22,7 @@ class BSTTest : public ::testing::Test
         static IntVector getElementsPreOrder(const BSTree& tree) noexcept;
         static IntVector getElementsInOrder(const BSTree& tree) noexcept;
         static IntVector getElementsPostOrder(const BSTree& tree) noexcept;
+        static IntMatrix getElementsLevelOrder(const BSTree& tree) noexcept;
         static void testTree(const BSTree& tree) noexcept;
     
     protected:
