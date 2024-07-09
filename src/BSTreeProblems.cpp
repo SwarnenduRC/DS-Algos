@@ -1,5 +1,7 @@
 #include "BSTreeProblems.hpp"
 
+#include <exception>
+
 using VecOfList = std::vector<std::list<TreeNode*>>;
 
 /*static*/ VecOfList BSTreeProblems::createLinkedListAtEachLevel(const BSTree& tree) noexcept
@@ -27,6 +29,36 @@ using VecOfList = std::vector<std::list<TreeNode*>>;
     return retVal;
 }
 
+/*static*/ bool BSTreeProblems::checkBalanced(const BSTree& tree)
+{
+    if (tree.empty())
+        return true;
+
+    try
+    {
+        checkBalanced(tree.getRoot());
+    }
+    catch(const std::exception& e)
+    {
+        return false;
+    }
+    return true;
+}
+
+/*static*/ int BSTreeProblems::checkBalanced(const TreeNode* pNode)
+{
+    if (pNode == nullptr)
+        return 0;
+
+    auto leftTreeHeight = checkBalanced(pNode->m_pLeft.get());
+    auto rightTreeHeight = checkBalanced(pNode->m_pRight.get());
+    auto heightDiff = leftTreeHeight - rightTreeHeight;
+    if (heightDiff < -1 || heightDiff > 1)
+        throw std::logic_error("Tree is imbalanced");
+
+    return (1 + std::max(leftTreeHeight, rightTreeHeight));
+}
+
 TEST_F(BSTreeProblems, testListOfDepth)
 {
     std::initializer_list<int> iList = { 5, 3, 7, 2, 4, 6, 8, 1, 9 };
@@ -35,7 +67,7 @@ TEST_F(BSTreeProblems, testListOfDepth)
 
     /**
      * @see BSTTest::testTree
-     * for details baout how level order traversal is verified
+     * for details about how level order traversal is verified
      */
     auto levelOrder = getElementsLevelOrder(tree);
     auto levelOrderList = createLinkedListAtEachLevel(tree);
@@ -110,5 +142,23 @@ TEST_F(BSTreeProblems, testListOfDepth)
             ++itrFirstProbability;
             ++itrSecondProbability;
         }
+    }
+}
+
+TEST_F(BSTreeProblems, testCheckBalanced)
+{
+    {
+        std::initializer_list<int> iList = { 5, 3, 7, 2, 4, 6, 8, 1, 9 };
+        BSTree tree(iList);
+        testTree(tree);
+        EXPECT_TRUE(checkBalanced(tree));
+    }
+    {
+        BSTree tree;
+        tree.insert(9);
+        tree.insert(7);
+        tree.insert(5);
+
+        EXPECT_FALSE(checkBalanced(tree));
     }
 }
