@@ -98,10 +98,10 @@ namespace linked_list
             void push_at(const size_t pos, const int val);
             void push_middle(const int val);
             /**
-             * @brief Makes the list cyclic
-             *        This function makes the linked ist
-             *        a cyclic one by making next of m_pTail
-             *        pointing back to m_pHead
+             * @brief Makes the list cyclic.
+             *        This function makes the linked list
+             *        a cyclic one by making next of tail
+             *        pointer pointing back to head
              */
             void makeCyclic();
             /**
@@ -121,11 +121,20 @@ namespace linked_list
             inline size_t size() const noexcept { return m_size; }
             inline SinglyNode* getHead() const noexcept { return m_pHead; }
             inline SinglyNode* getTail() const noexcept { return m_pTail; }
-            inline void incrementSize() noexcept { ++m_size; }
-            inline void decrementSize() noexcept { --m_size; }
+            /**
+             * @brief Removes a particular node from a list.
+             *        A static function to remove a node from
+             *        a list and re adjusting its head and tail
+             *        pointers accordingly.
+             * 
+             * @param [in/out] list The list from which the node to be deleted
+             * @param pNode The node which would be deleted from the list
+             * @return Returns nothing 
+             */
+            static void remove(SinglyLinkedList& list, SinglyNode* pNode) noexcept;
 
             /**
-             * @brief Detects whether the given linked list is cyclic in nature or not
+             * @brief Detects whether the given linked list is cyclic in nature or not.
              *        A static function to detect whether the given linked list is
              *        cyclic in nature or not. It uses two pointers solution or 
              *        Floyd's cycle finding algorithm, also known as "tortoise and hare"
@@ -138,7 +147,7 @@ namespace linked_list
             static bool isCyclic(SinglyNode* pHead);
 
             /**
-             * @brief Checks if there is an intersection between the two linked lists
+             * @brief Checks if there is an intersection between the two linked lists.
              *        A static function to check if the linked lists in question are
              *        intersected or not. Throws a std runtime exception if one of the
              *        given list cyclic in nature

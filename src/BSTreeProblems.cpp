@@ -35,7 +35,7 @@ TEST_F(BSTreeProblems, testListOfDepth)
 
     /**
      * @see BSTTest::testTree
-     * for details baout how level order traversal is verified
+     * for details about how level order traversal is verified
      */
     auto levelOrder = getElementsLevelOrder(tree);
     auto levelOrderList = createLinkedListAtEachLevel(tree);
