@@ -28,24 +28,22 @@ SinglyLinkedList LinkListAlgos::removeDuplicate(const SinglyLinkedList& list)
     auto firstSolution = [](const SinglyLinkedList& list)
     {
         auto listCopy = list;
-        auto pHead = listCopy.getHead();
+        auto pCurr = listCopy.getHead();
         std::unordered_set<int> hashTable;
-        hashTable.insert(pHead->m_element);
-        while (pHead && pHead->m_pNext)
+        while (pCurr)
         {
-            if (hashTable.find(pHead->m_pNext->m_element) == hashTable.end())
+            if (hashTable.empty() || hashTable.find(pCurr->m_element) == hashTable.end())
             {
-                hashTable.insert(pHead->m_pNext->m_element);
+                hashTable.insert(pCurr->m_element);
             }
             else
             {
-                auto pDup = pHead->m_pNext;
-                pHead->m_pNext = pDup->m_pNext;
-                pDup->m_pNext = nullptr;
-                delete pDup;
-                listCopy.decrementSize();
+                auto pNext = pCurr->m_pNext;
+                SinglyLinkedList::remove(listCopy, pCurr);
+                pCurr = pNext;
+                continue;
             }
-            pHead = pHead->m_pNext;
+            pCurr = pCurr->m_pNext;
         }
         return listCopy;
     };

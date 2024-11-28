@@ -1,4 +1,4 @@
-#include "GraphTest.h"
+#include "GraphTest.hpp"
 
 /**
  * @brief The first element of the vector depicts a pair of total no of

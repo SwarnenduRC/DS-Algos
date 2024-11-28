@@ -237,8 +237,6 @@ namespace linked_list
                 pForntNode->m_pNext = nullptr;
                 delete pForntNode;
             }
-
-            pForntNode = nullptr;
             --m_size;
             return retVal;
         }
@@ -306,7 +304,7 @@ namespace linked_list
             if (pDelNode)
             {
                 retVal = pDelNode->m_element;
-                pDelNode->m_pNext = nullptr; //Break the link so that deleting it doesn't invoke entire list recusively.
+                pDelNode->m_pNext = nullptr; //Break the link so that deleting it doesn't apply to entire list recusively.
                 delete pDelNode;
             }
             pDelNode = nullptr;
@@ -325,6 +323,39 @@ namespace linked_list
         else
         {
             return pop_at(size() / 2);
+        }
+    }
+
+    /*static*/ void SinglyLinkedList::remove(SinglyLinkedList& list, SinglyNode* pNode) noexcept
+    {
+        if (list.empty() || !pNode)
+            return;
+
+        if (list.getHead() == pNode)
+        {
+            list.pop_front();
+        }
+        else if (list.getTail() == pNode)
+        {
+            list.pop_back();
+        }
+        else
+        {
+            size_t pos = 1;
+            auto pDelNode = list.getHead()->m_pNext;
+            while (pDelNode)
+            {
+                if (pDelNode == pNode)
+                {
+                    list.pop_at(pos);
+                    break;
+                }
+                else
+                {
+                    pDelNode = pDelNode->m_pNext;
+                    ++pos;
+                }
+            }
         }
     }
 

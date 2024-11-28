@@ -21,7 +21,7 @@ size_t RADP::findFibonacciDP1(size_t number) noexcept
     
     static std::vector<size_t> memoTable(number, 0);
     if (memoTable[number] == 0)
-        memoTable[number] = findFibonacciDP1(number - 2) + findFibonacciDP1(number - 2);
+        memoTable[number] = findFibonacciDP1(number - 2) + findFibonacciDP1(number - 1);
 
     return memoTable[number];
 }
