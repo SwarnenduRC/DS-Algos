@@ -66,7 +66,7 @@ TEST_F(GraphAlgos, testRoute)
         /**
          * @brief The first element of the vector depicts a pair of total no of
          * nodes and the edges present in the graph, e.g; the graph represented
-         * by this data object having total 10 nodes and 5 edges (a connection)
+         * by this data object having total 10 nodes and 7 edges (a connection)
          * between each two nodes is called an edge. In all Leetcode/Hackerrank
          * problems a graph is described in this way only. The subsequent elements
          * of the vector depicts each edge or the connections between various nodes.
@@ -91,7 +91,7 @@ TEST_F(GraphAlgos, testRoute)
         /**
          * @brief The first element of the vector depicts a pair of total no of
          * nodes and the edges present in the graph, e.g; the graph represented
-         * by this data object having total 10 nodes and 5 edges (a connection)
+         * by this data object having total 10 nodes and 6 edges (a connection)
          * between each two nodes is called an edge. In all Leetcode/Hackerrank
          * problems a graph is described in this way only. The subsequent elements
          * of the vector depicts each edge or the connections between various nodes.
