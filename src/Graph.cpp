@@ -42,11 +42,32 @@ void Graph::fill(const std::vector<StdPair>& data, const bool zeroBased)
     if (data.empty() || data.size() < 2)
         return;
 
+    /**
+         * @brief The first element of the vector depicts a pair of total no of
+         * nodes and the edges present in the graph, e.g; the graph represented
+         * by this data object having total 10 nodes and 7 edges (a connection)
+         * between each two nodes is called an edge. In all Leetcode/Hackerrank
+         * problems a graph is described in this way only. The subsequent elements
+         * of the vector depicts each edge or the connections between various nodes.
+         * A zero based graph means that the node 0 should not be counted for the
+         * purposes of indexing
+         *
+        static std::vector<std::pair<int, int>> zeroBasedData = { 
+                                                                    std::make_pair(10, 7),
+                                                                    std::make_pair(1, 3),
+                                                                    std::make_pair(2, 4),
+                                                                    std::make_pair(5, 7),
+                                                                    std::make_pair(6, 8),
+                                                                    std::make_pair(9, 0),
+                                                                    std::make_pair(8, 4),
+                                                                    std::make_pair(6, 9)
+                                                                };
+         */
     m_nodeCnt = static_cast<size_t>(data[0].first);
     m_edgeCnt = static_cast<size_t>(data[0].second);
     m_bZeroBased = zeroBased;
     
-    size_t idx = 1;
+    size_t idx = 1; // It is 1 because the first index of the data vector which is 0 represents node and edge counts.
     if (m_bZeroBased)
     {
         m_adjacencyMatrix.resize(m_nodeCnt);    //Setting the matrix size equals to total nodes available.
@@ -56,7 +77,7 @@ void Graph::fill(const std::vector<StdPair>& data, const bool zeroBased)
         m_adjacencyMatrix.resize(m_nodeCnt + 1);    //If it is a non zero based array then total indexes should be total node cnt + 1
         m_adjacencyMatrix[0].resize(0); //No neighbours for the node 0 for non zero based matrix
     }
-    while (idx < data.size())
+    while (idx < data.size())   // Loop through the data vector populate the matrix
     {
         auto node = data[idx].first;
         auto neighbour = data[idx].second;
