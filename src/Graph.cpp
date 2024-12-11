@@ -158,10 +158,10 @@ std::vector<int> Graph::getBFSList() const noexcept
     std::queue<int> nodeQ;
     std::vector<int> outVec;
     auto arrSize = m_adjacencyMatrix.size();
-    bool visitedArr[arrSize];
+    bool visitedArr[arrSize];   // An array to keep track of the nodes we already visited during the traversal
     std::fill(visitedArr, visitedArr + arrSize, false);
     size_t idx = m_bZeroBased ? 0 : 1;
-    nodeQ.push(idx);
+    nodeQ.push(idx);    // Push the first node into the queue.
 
     while (idx < arrSize)
     {
@@ -171,16 +171,22 @@ std::vector<int> Graph::getBFSList() const noexcept
             nodeQ.pop();
             if (!visitedArr[data])
             {
-                visitedArr[data] = true;
+                visitedArr[data] = true;    // Mark the node as visited in the respective array
                 outVec.emplace_back(data);
             }
-            for (const auto& neighbours : m_adjacencyMatrix[data])
+            // Now go for it's neighbours and repeat the same but don't mark them
+            // as visited for now (we will do it when we iterate next time)
+            for (const auto& neighbour : m_adjacencyMatrix[data])
             {
-                if (!visitedArr[neighbours])
-                    nodeQ.push(neighbours);
+                if (!visitedArr[neighbour])    // If a neighbour is already visited then leave it
+                    nodeQ.push(neighbour);
             }
         }
         ++idx;
+        // This line is for the condition where the previous node
+        // has no neighbours. In case the previous node has neighbour
+        // as next node then it would be automatically covered in next
+        // iterations
         if (!visitedArr[idx])
             nodeQ.push(idx);
     }
