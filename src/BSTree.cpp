@@ -207,7 +207,7 @@ void BSTree::eraseInternal(TreeNode* pNode, std::unique_ptr<TreeNode>& pParent) 
     {
         /**
          * @brief Now while erasing a node from the BST there might be three
-         * cases mainly; 
+         * scenarios mainly;
          * 1) The node is a leaf node, i.e.; it has no children
          * 2) The node is having only either left or right child
          * 3) The node is having both the children
