@@ -1,5 +1,5 @@
 ## This is a shell script to download, compile and build Google unit test
-## case framework (version 1.14.0) on MacOS X and later. It also copies
+## case framework (version 1.15.0) on MacOS X and later. It also copies
 ## over the necessary libraries and header files to the respective system path 
 ## so that the test framework is available for any project. After that it cleans
 ## up the downloaded folder and unnecessary files.
@@ -13,20 +13,20 @@
 ## Current directory
 CURR_DIR=$(pwd)
 
-## Download the 1.14.0 release version to the disc and unpack it
+## Download the 1.15.2 release version to the disc and unpack it
 function download {
-    printf "\n Downloading and unpacking GoogleTest framework 1.14.0\n\n..."
-    curl -LO https://github.com/google/googletest/archive/refs/tags/v1.14.0.tar.gz
-    tar xf v1.14.0.tar.gz
+    printf "\n Downloading and unpacking GoogleTest framework 1.15.2\n\n..."
+    curl -LO https://github.com/google/googletest/archive/refs/tags/v1.15.2.tar.gz
+    tar xf v1.15.2.tar.gz
 }
 
 ## Build and compile it
 function build {
     printf "\n Building GTEST and GMOCK...\n\n"
-    cd googletest-1.14.0
+    cd googletest-1.15.2
     mkdir build
     cd $_
-    cmake -Dgtest_build_samples=OFF -Dgtest_build_tests=OFF ../
+    cmake -Dgtest_build_samples=OFF -Dgtest_build_tests=OFF -DCMAKE_CXX_STANDARD=20 ../
     make
     sudo chown -R `whoami`:admin /usr/local/include/
     sudo make install
@@ -36,8 +36,8 @@ function build {
 function cleanup {
     printf "\n  Running Cleanup\n\n"
     cd $CURR_DIR
-    rm -rf googletest-1.14.0
-    unlink v1.14.0.tar.gz
+    rm -rf googletest-1.15.2
+    unlink v1.15.2.tar.gz
 }
 
 download && build && cleanup
