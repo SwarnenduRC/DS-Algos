@@ -1,16 +1,21 @@
 ##Directories
 SRC_DIR := src
+SRC_TEST_DIR := $(SRC_DIR)/test
 INC_DIR := include
+INC_TEST_DIR := $(INC_DIR)/test
 OBJ_DIR := obj
 BIN_DIR := bin
 
 ##Compiler flags
 CXX := clang++
 
-CXXFLAGS := -std=c++20 -g -Wall -Wextra -Werror -Wno-unused-function -I$(INC_DIR) $(addprefix -I, $(wildcard $(INC_DIR)/*))
+CXXFLAGS := -std=c++20 -g -Wall -Wextra -Werror -Wno-unused-function \
+			-I$(INC_DIR) -I$(INC_TEST_DIR) \
+			$(addprefix -I, $(wildcard $(INC_DIR)/*), $(wildcard $(INC_TEST_DIR)/*))
 
 ##Files
-SRCS := $(wildcard *.cpp $(SRC_DIR)/*.cpp)
+SRCS := $(shell find $(SRC_DIR) -name "*.cpp")
+#SRCS := $(wildcard *.cpp $(SRC_DIR)/*.cpp)
 OBJS := $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%.o, $(SRCS))
 DBG_OBJS := $(patsubst $(SRC_DIR)/%.cpp, $(OBJ_DIR)/%_d.o, $(SRCS))
 
@@ -47,6 +52,7 @@ $(OBJ_DIR)/%_d.o: $(SRC_DIR)/%.cpp | $(OBJ_DIR)
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
+	mkdir -p $(OBJ_DIR)/test
 
 $(BIN_DIR):
 	mkdir -p $(BIN_DIR)
