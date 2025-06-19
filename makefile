@@ -11,7 +11,7 @@ CXX := clang++
 
 CXXFLAGS := -std=c++20 -g -Wall -Wextra -Werror -Wno-unused-function \
 			-I$(INC_DIR) -I$(TEST_DIR) \
-			$(addprefix -I, $(wildcard $(INC_DIR)/*), $(wildcard $(TEST_DIR)/*))
+			$(addprefix -I, $(wildcard $(INC_DIR)/*.hpp), $(wildcard $(TEST_DIR)/*.hpp))
 
 ##Files
 SRCS := $(shell find $(SRC_DIR) -name "*.cpp")

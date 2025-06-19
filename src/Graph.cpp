@@ -158,8 +158,8 @@ std::vector<int> Graph::getBFSList() const noexcept
     std::queue<int> nodeQ;
     std::vector<int> outVec;
     auto arrSize = m_adjacencyMatrix.size();
-    bool visitedArr[arrSize];   // An array to keep track of the nodes we already visited during the traversal
-    std::fill(visitedArr, visitedArr + arrSize, false);
+    // An array to keep track of the nodes we already visited during the traversal
+    std::vector<bool> visitedArr(arrSize, false);
     size_t idx = m_bZeroBased ? 0 : 1;
     nodeQ.push(idx);    // Push the first node into the queue.
 
@@ -201,8 +201,8 @@ std::vector<int> Graph::getDFSList() const noexcept
     std::stack<int> nodeStack;
     std::vector<int> outVec;
     auto arrSize = m_adjacencyMatrix.size();
-    bool visitedArr[arrSize];
-    std::fill(visitedArr, visitedArr + arrSize, false);
+    // An array to keep track of the nodes we already visited during the traversal
+    std::vector<bool> visitedArr(arrSize, false);
     size_t idx = m_bZeroBased ? 0 : 1;
     nodeStack.push(idx);
 

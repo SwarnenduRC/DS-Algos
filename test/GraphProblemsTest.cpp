@@ -14,8 +14,8 @@ bool GraphAlgos::isThereRoute(const Graph& graph, const int firstNode, const int
     auto findViaBFS = [&](const int firstNode, const int secondNode)
     {
         std::queue<int> nodesQueue;
-        bool visitedNodesArr[totalNodeCnt];
-        std::fill(visitedNodesArr, visitedNodesArr + totalNodeCnt, false);  //Set all false before start visiting nodes
+        // An array to keep track of the nodes we already visited during the traversal
+        std::vector<bool> visitedNodesArr(totalNodeCnt, false);
         nodesQueue.push(firstNode);
 
         while (!nodesQueue.empty())
@@ -37,8 +37,8 @@ bool GraphAlgos::isThereRoute(const Graph& graph, const int firstNode, const int
     auto findViaDFS = [&](const int firstNode, const int secondNode)
     {
         std::stack<int> nodesStack;
-        bool visitedNodesArr[totalNodeCnt];
-        std::fill(visitedNodesArr, visitedNodesArr + totalNodeCnt, false);  //Set all false before start visiting nodes
+        // An array to keep track of the nodes we already visited during the traversal
+        std::vector<bool> visitedNodesArr(totalNodeCnt, false);
         nodesStack.push(firstNode);
 
         while (!nodesStack.empty())
